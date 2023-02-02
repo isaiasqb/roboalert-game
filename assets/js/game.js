@@ -2,22 +2,24 @@
 var clr = '\x1B[31m' 
 var endclr = '\x1B[0m'
 
+// declare player's stats
 var playerName = window.prompt("What is your CHAMPION's name?");
 var playerHealth = 100;
 var playerAttack = 10;
 var playerMoney = 10;
 
-console.log(
-  `${clr}${playerName}${endclr} is ready to fight!
-  he has ${clr}${playerHealth}${endclr} health points 
-  and packs a punch of ${clr}${playerAttack} megatons!${endclr}`);
-
-var enemyName = "Robort0";
+// declare enemie's stats
+var enemyNames = ["Robort0", "Assassindr0id", "MegaMachine"];
 var enemyHealth = 50;
 var enemyAttack = 12;
 
 
-var fight = function(){
+var fight = function(enemyName){
+  console.log(
+    `${clr}${playerName}${endclr} is ready to fight!
+    he has ${clr}${playerHealth}${endclr} health points 
+    and packs a punch of ${clr}${playerAttack} megatons!${endclr}`);
+  
   window.alert("WELCOME to ROBOALERT Battle!");
   // ask player if they want to fight or skip battle
   var promptFight = window.prompt(`Would you FIGHT or SKIP this battle?
@@ -62,11 +64,13 @@ var fight = function(){
       else {
         fight()
       }
-      
+
   } // IF player enters work answer 
   else {
     window.alert("Please choose a valid option");
   }
 }
 
-fight();
+for(i = 0; i < enemyNames.length; i++) {
+  fight(enemyNames[i]);
+}
