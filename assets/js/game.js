@@ -74,7 +74,7 @@ var fight = function(enemyName){
   }
 }
 
-for (i = 0; i < enemyNames.length; i++){
+for(var i = 0; i < enemyNames.length; i++) {
   fight(enemyNames[i]);
 }
 
