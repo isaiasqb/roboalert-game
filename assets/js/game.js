@@ -7,12 +7,7 @@ var playerHealth = 100;
 var playerAttack = 10;
 var playerMoney = 10;
 
-console.log(
-  `${clr}${playerName}${endclr} is ready to fight!
-  he has ${clr}${playerHealth}${endclr} health points 
-  and packs a punch of ${clr}${playerAttack} megatons!${endclr}`);
-
-var enemyName = "Robort0";
+var enemyNames = ["Robort0", "MegaMachine", "RoboAssassin"];
 var enemyHealth = 50;
 var enemyAttack = 12;
 
@@ -22,6 +17,16 @@ var fight = function(){
   // ask player if they want to fight or skip battle
   var promptFight = window.prompt(`Would you FIGHT or SKIP this battle?
   enter FIGHT or SKIP to choose.`);
+  
+  console.log(
+  `${clr}${playerName}${endclr} is ready to fight!
+  he has ${clr}${playerHealth}${endclr} health points 
+  and packs a punch of ${clr}${playerAttack} megatons!${endclr}`);
+  
+  //print the names of the enemies
+  for (i = 0; i < enemyNames.length; i++){
+  console.log(`Enemy #${i+1} is ${enemyNames.[i]}`)
+  }
 
   //IF player chooses to fight
   if (promptFight === "fight" || promptFight === "FIGHT") {
