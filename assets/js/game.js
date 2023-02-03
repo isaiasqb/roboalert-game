@@ -12,7 +12,7 @@ var enemyHealth = 50;
 var enemyAttack = 12;
 
 
-var fight = function(){
+var fight = function(enemyName){
   window.alert("WELCOME to ROBOALERT Battle!");
   // ask player if they want to fight or skip battle
   var promptFight = window.prompt(`Would you FIGHT or SKIP this battle?
@@ -25,7 +25,7 @@ var fight = function(){
   
   //print the names of the enemies
   for (i = 0; i < enemyNames.length; i++){
-  console.log(`Enemy #${i+1} is ${enemyNames.[i]}`)
+  console.log(`Enemy #${i+1} is ${enemyNames[i]}`)
   }
 
   //IF player chooses to fight
@@ -74,4 +74,7 @@ var fight = function(){
   }
 }
 
-fight();
+for (i = 0; i < enemyNames.length; i++){
+  fight(enemyNames[i]);
+}
+
