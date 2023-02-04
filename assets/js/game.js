@@ -14,11 +14,11 @@ var enemyHealth = 60;
 var enemyAttack = 40;
 
 var fight = function(enemyName){
-  
   //Repeat and execute the fight function as long as the enemy is alive
   while (playerHealth > 0 &&  enemyHealth > 0 ) {  
     // ask player if they want to fight or skip battle
-    var promptFight = window.prompt(`Would you FIGHT or SKIP this battle?
+    var promptFight = window.prompt(`
+    Would you FIGHT or SKIP this battle?
     enter F or S to choose.`);
 
     //IF player chooses to fight
@@ -31,6 +31,8 @@ var fight = function(enemyName){
       // check enemy's health
       if (enemyHealth <= 0) {
         console.log(`Your Enemy, ${enemyName} has been destroyed!`)
+        //award player some money
+        playerMoney = playerMoney + 20
         break
       } else {
         console.log(`${playerName} Attacked! ${enemyName}'s health is now ${enemyHealth}`)
