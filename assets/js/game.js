@@ -11,14 +11,7 @@ var playerMoney = 10;
 // declare enemie's stats
 var enemyNames = ["Robort0", "Assassindr0id", "MegaMachine"];
 var enemyHealth = 60;
-var enemyAttack = 10;
-
-console.log(
-  `"WELCOME to ROBOALERT Battle!"
-  
-  ${clr}${playerName}${endclr} is ready to fight!
-  he has ${clr}${playerHealth}${endclr} health points 
-  and packs a punch of ${clr}${playerAttack} megatons!${endclr}`);
+var enemyAttack = 40;
 
 var fight = function(enemyName){
   
@@ -76,10 +69,24 @@ var fight = function(enemyName){
 }
 
 for(i = 0; i < enemyNames.length; i++) {
-  //individualize the name of every enemy
-  var pickedEnemyName = enemyNames[i];
-  //reset the health of each enemy after each battle(loop)
-  enemyHealth = 60
-  console.log(`${pickedEnemyName} has ENTERED THE BATTLEGROUND`)
-  fight(pickedEnemyName);
+  if (playerHealth > 0) {
+    //individualize the name of every enemy
+    var pickedEnemyName = enemyNames[i];
+
+    console.log(
+      `"WELCOME to ROBOALERT Battle!"
+      
+      ROUND #${i + 1} /////  ${pickedEnemyName} has ENTERED THE BATTLEGROUND
+      
+      ${clr}${playerName}${endclr} is ready to fight!
+      he has ${clr}${playerHealth}${endclr} health points 
+      and packs a punch of ${clr}${playerAttack} megatons!${endclr}`);
+     
+    //reset the health of each enemy after each battle(loop)
+    enemyHealth = 60
+    fight(pickedEnemyName);
+  } else {
+    console.log(`xxxxx GAME OVER FOR YOU xxxxx`);
+    break;
+  }
 }
