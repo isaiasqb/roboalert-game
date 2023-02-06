@@ -70,25 +70,59 @@ var fight = function(enemyName){
   }
 }
 
-for(i = 0; i < enemyNames.length; i++) {
-  if (playerHealth > 0) {
-    //individualize the name of every enemy
-    var pickedEnemyName = enemyNames[i];
+// function to start the game
+var startGame = function() {
+  // reset player stats
+  var playerHealth = 100;
+  var playerAttack = 20;
+  var playerMoney = 10;
 
-    console.log(
-      `"WELCOME to ROBOALERT Battle!"
+  for(i = 0; i < enemyNames.length; i++) {
+    if (playerHealth > 0) {
+      //individualize the name of every enemy
+      var pickedEnemyName = enemyNames[i];
       
-      ROUND #${i + 1} /////  ${pickedEnemyName} has ENTERED THE BATTLEGROUND
-      
-      ${clr}${playerName}${endclr} is ready to fight!
-      he has ${clr}${playerHealth}${endclr} health points 
-      and packs a punch of ${clr}${playerAttack} megatons!${endclr}`);
-     
-    //reset the health of each enemy after each battle(loop)
-    enemyHealth = 60
-    fight(pickedEnemyName);
-  } else {
-    console.log(`xxxxx GAME OVER FOR YOU xxxxx`);
-    break;
+      console.log(
+        `"WELCOME to ROBOALERT Battle!"
+        
+        ROUND #${i + 1} /////  ${pickedEnemyName} has ENTERED THE BATTLEGROUND
+        
+        ${clr}${playerName}${endclr} is ready to fight!
+        he has ${clr}${playerHealth}${endclr} health points 
+        and packs a punch of ${clr}${playerAttack} megatons!${endclr}`);
+        
+        //reset the health of each enemy after each battle(loop)
+        enemyHealth = 60
+        fight(pickedEnemyName);
+      } else {
+        console.log(`xxxxx GAME OVER FOR YOU xxxxx`);
+        break;
+      }
+    } //...end of for loop
+
+    //play again
+    endGame()
+  };
+
+  //END function for ending the entire game
+  var endGame = function(){
+    if(playerHealth > 0) {
+      console.log(`GREAT! You survided, now you have ${playerMoney} bucks in the bank`)
+    }
+    else {
+      console.log(`Your champion was DESTROYED!`)
+    }
+
+    //ask player if they'd like to play again
+    var playAgainConfirm = window.confirm(`Wanna play again?`);
+
+    if (playAgainConfirm){
+      startGame();
+    }
+    else {
+      window.alert(`Ok then. Thank you for playing! See yu later? I guess`)
+    }
+
   }
-}
+
+  startGame()
