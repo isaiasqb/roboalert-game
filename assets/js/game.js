@@ -11,82 +11,72 @@ var playerMoney = 10;
 // declare enemie's stats
 var enemyNames = ["Robort0", "Assassindr0id", "MegaMachine"];
 var enemyHealth = 60;
-var enemyAttack = 40;
+var enemyAttack = 20;
 
 var fight = function(enemyName){
   //Repeat and execute the fight function as long as the enemy is alive
   while (playerHealth > 0 &&  enemyHealth > 0 ) {  
     // ask player if they want to fight or skip battle
     var promptFight = window.prompt(`
-    Would you FIGHT or SKIP this battle?
-    enter F or S to choose.`);
-
-    //IF player chooses to fight
-    if (promptFight === "F" || promptFight === "f") {
-      //log the answer of the skip or fight
-      console.log(`***----- You chose to ${clr}FIGHT${endclr} this battle! -----***`);
-
-      // Substract playerAttack form Enemy's health
-      enemyHealth = enemyHealth - playerAttack
-      // check enemy's health
-      if (enemyHealth <= 0) {
-        console.log(`Your Enemy, ${enemyName} has been destroyed!`)
-        //award player some money
-        playerMoney = playerMoney + 20
-        break
-      } else {
-        console.log(`${playerName} Attacked! ${enemyName}'s health is now ${enemyHealth}`)
-      }
-      
-      // Substract enemyAttack from Player's health
-      playerHealth = playerHealth - enemyAttack
-      // check player's health
-      if (playerHealth <= 0){
-        console.log(`Your champion: ${playerName} has been destroyed! - health is down to ${playerHealth}`)
-        break
-      } else {
-        console.log(`${enemyName} Attacked! ${playerName}'s health is now ${playerHealth}`)
-      }
-
-    } // IF player chooses to skip the battle
-    else if (promptFight === "S" || promptFight === "s") {
+    Would you FIGHT or SKIP this battle? Enter F or S to choose.`);
+    
+    // IF player chooses to skip the battle
+    if (promptFight === "S" || promptFight === "s") {
       // confirm to skip battle
       var confirmSkip = window.confirm(`Are you sure you want to SKIP the Battle?`);
-        // if YES (true), leave fight
-        if (confirmSkip) {
-          playerMoney = playerMoney - 10;
-          console.log(`***----- ${playerName} has chosen to SKIP this battle! -----***
-          You haven been Penalized for skipping the battle. Your remaining Money is ${clr}${playerMoney} coins `)
-          break
-        } // if NO (false), ask question again. Run fight()
-        else {
-          fight()
-        }
-
-    } // IF player enters work answer 
-    else {
-      window.alert("Please choose a valid option");
+      // if YES (true), leave fight
+      if (confirmSkip) {
+        playerMoney = playerMoney - 10;
+        console.log(`***----- ${playerName} has chosen to SKIP this battle! -----***
+        You haven been Penalized for skipping the battle. Your remaining Money is ${clr}${playerMoney} coins `)
+        break
+      } 
+    } //IF player chooses to fight
+     else if (promptFight === "F" || promptFight === "f") {
+      //log the answer of the skip or fight
+      console.log(`***----- You chose to ${clr}FIGHT${endclr} this battle! -----***`);
+      } 
+    
+    // Player Attacks
+    enemyHealth = enemyHealth - playerAttack
+    console.log(`${playerName} Attacked! ${enemyName}'s health is now ${enemyHealth}`)
+    // Check enemy's health
+    if (enemyHealth <= 0) {
+      console.log(`Your Enemy, ${enemyName} has been destroyed!`)
+      //award player some money
+      playerMoney = playerMoney + 20
+      break;
     }
-  }
-}
 
-// function to start the game
+    // Substract enemyAttack from Player's health
+    playerHealth = playerHealth - enemyAttack
+    console.log(`${enemyName} Attacked! ${playerName}'s health is now ${playerHealth}`)
+    // check player's health
+    if (playerHealth <= 0){
+      console.log(`Your champion: ${playerName} has been destroyed!`)
+      break
+    }
+  } //END wuile loop
+} //END fight() function
+    
+    
+
+// START the game function
 var startGame = function() {
   // reset player stats
   var playerHealth = 100;
   var playerAttack = 20;
   var playerMoney = 10;
 
-  for(i = 0; i < enemyNames.length; i++) {
+  // fight each enemy robot by looping over them and fighting them one at a time
+  for (var i = 0; i < enemyNames.length; i++) {
+    //individualize the name of every enemy
+    var pickedEnemyName = enemyNames[i];
+    //player still alive? keep fighting
     if (playerHealth > 0) {
-      //individualize the name of every enemy
-      var pickedEnemyName = enemyNames[i];
-      
       console.log(
-        `"WELCOME to ROBOALERT Battle!"
-        
+        `WELCOME to ROBOALERT Battle!
         ROUND #${i + 1} /////  ${pickedEnemyName} has ENTERED THE BATTLEGROUND
-        
         ${clr}${playerName}${endclr} is ready to fight!
         he has ${clr}${playerHealth}${endclr} health points 
         and packs a punch of ${clr}${playerAttack} megatons!${endclr}`);
@@ -95,28 +85,29 @@ var startGame = function() {
         enemyHealth = 60
         fight(pickedEnemyName);
 
-        //option to SHOP if we are not at the last enemy at the array
+        //SHOP option if we are not at the last enemy at the array
         if (playerHealth < 0 && i < enemyNames.length -1) {
           var storeConfirm = window.confirm(`The fight is over, visit the store?`)
-
           if (storeConfirm) {
             shop();
           }
         }
       } else {
-        console.log(`xxxxx GAME OVER FOR YOU xxxxx`);
+        console.log(`xxxxx Your Champion is Dead! GAME OVER FOR YOU xxxxx`);
         break;
       }
-    } //...end of for loop
+    } //END for loop
 
-    //play again
+    //if we have fought all enemies or our champion is dead run endGame()
     endGame()
   };
+
+
 
   //END function for ending the entire game
   var endGame = function(){
     if(playerHealth > 0) {
-      console.log(`GREAT! You survided, now you have ${playerMoney} bucks in the bank`)
+      console.log(`GREAT, ${clr}you've survived!${endclr}. ${playerName} has ${playerMoney} bucks in the bank`)
     }
     else {
       console.log(`Your champion was DESTROYED!`)
@@ -137,7 +128,7 @@ var startGame = function() {
   var shop = function() {
 // ask player what they'd like to do
     var shopOptionPrompt = window.prompt(
-      "Would you like to REFILL your health, UPGRADE your attack, or LEAVE the store? Please enter one: 'REFILL', 'UPGRADE', or 'LEAVE' to make a choice."
+      "Would you like to buy any of these kits? REFILL-Health, UPGRADE-Attack, or LEAVE the store? Please enter one: 'REFILL', 'UPGRADE', or 'LEAVE' to make a choice."
     );
 
     switch (shopOptionPrompt) {
@@ -173,6 +164,6 @@ var startGame = function() {
         shop();
         break;
       }
-  }  
+  }// END shop()
 
   startGame()
