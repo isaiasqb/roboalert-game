@@ -17,8 +17,7 @@ var fight = function(enemyName){
   //Repeat and execute the fight function as long as the enemy is alive
   while (playerHealth > 0 &&  enemyHealth > 0 ) {  
     // ask player if they want to fight or skip battle
-    var promptFight = window.prompt(`
-    Would you FIGHT or SKIP this battle? Enter F or S to choose.`);
+    var promptFight = window.prompt(`Would you FIGHT or SKIP this battle? Enter F or S to choose.`);
     
     // IF player chooses to skip the battle
     if (promptFight === "S" || promptFight === "s") {
@@ -86,7 +85,7 @@ var startGame = function() {
         fight(pickedEnemyName);
 
         //SHOP option if we are not at the last enemy at the array
-        if (playerHealth < 0 && i < enemyNames.length -1) {
+        if (playerHealth > 0 && i < enemyNames.length -1) {
           var storeConfirm = window.confirm(`The fight is over, visit the store?`)
           if (storeConfirm) {
             shop();
