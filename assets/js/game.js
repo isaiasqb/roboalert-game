@@ -13,6 +13,13 @@ var enemyNames = ["Robort0", "Assassindr0id", "MegaMachine"];
 var enemyHealth = 60;
 var enemyAttack = 20;
 
+
+var randomNumber = function (min, max) {
+  var value = Math.floor(Math.random() * (max - min + 1)) + min; 
+  return value;
+};
+
+
 var fight = function(enemyName){
   //Repeat and execute the fight function as long as the enemy is alive
   while (playerHealth > 0 &&  enemyHealth > 0 ) {  
@@ -25,7 +32,7 @@ var fight = function(enemyName){
       var confirmSkip = window.confirm(`Are you sure you want to SKIP the Battle?`);
       // if YES (true), leave fight
       if (confirmSkip) {
-        playerMoney = playerMoney - 10;
+        playerMoney =  Math.max(0, playerMoney - 10);
         console.log(`***----- ${playerName} has chosen to SKIP this battle! -----***
         You haven been Penalized for skipping the battle. Your remaining Money is ${clr}${playerMoney} coins `)
         break
@@ -37,8 +44,11 @@ var fight = function(enemyName){
       } 
     
     // Player Attacks
-    enemyHealth = enemyHealth - playerAttack
+    //generate a random attack power based on the player attack power
+    var playerDamage = randomNumber(playerAttack -5, playerAttack);
+    enemyHealth = Math.max(0, enemyHealth - playerDamage) //Math.max displays the largest number, preventing -0 values
     console.log(`${playerName} Attacked! ${enemyName}'s health is now ${enemyHealth}`)
+    
     // Check enemy's health
     if (enemyHealth <= 0) {
       console.log(`Your Enemy, ${enemyName} has been destroyed!`)
@@ -47,9 +57,12 @@ var fight = function(enemyName){
       break;
     }
 
-    // Substract enemyAttack from Player's health
-    playerHealth = playerHealth - enemyAttack
+    // Enemy Attacks
+    //generate a random attack power based on the player attack power
+    var enemyDamage = randomNumber(enemyAttack - 5, enemyAttack)
+    playerHealth = Math.max(0, playerHealth - enemyDamage) //Math.max displays the largest number, preventing -0 values
     console.log(`${enemyName} Attacked! ${playerName}'s health is now ${playerHealth}`)
+
     // check player's health
     if (playerHealth <= 0){
       console.log(`Your champion: ${playerName} has been destroyed!`)
@@ -73,15 +86,16 @@ var startGame = function() {
     var pickedEnemyName = enemyNames[i];
     //player still alive? keep fighting
     if (playerHealth > 0) {
+      //reset the health of each enemy after each battle(loop)
+      enemyHealth = randomNumber(40,60)
+
       console.log(
         `WELCOME to ROBOALERT Battle!
-        ROUND #${i + 1} /////  ${pickedEnemyName} has ENTERED THE BATTLEGROUND
+        ROUND #${i + 1} /////  ${pickedEnemyName} has ENTERED THE BATTLEGROUND with ${clr}${enemyHealth}${endclr} health points and ${clr}${enemyAttack}${endclr} attack power!  
         ${clr}${playerName}${endclr} is ready to fight!
-        he has ${clr}${playerHealth}${endclr} health points 
-        and packs a punch of ${clr}${playerAttack} megatons!${endclr}`);
+        packing a punch of ${clr}${playerAttack} megatons!${endclr}`);
         
-        //reset the health of each enemy after each battle(loop)
-        enemyHealth = 60
+
         fight(pickedEnemyName);
 
         //SHOP option if we are not at the last enemy at the array
@@ -119,7 +133,7 @@ var startGame = function() {
       startGame();
     }
     else {
-      window.alert(`Ok then. Thank you for playing! See yu later? I guess`)
+      window.alert(`Ok then. Thank you for playing! See you later? I guess`)
     }
 
   }
@@ -134,9 +148,9 @@ var startGame = function() {
       case "REFILL":
       case "refill":
         if (playerMoney >= 7) {
-          window.alert(`Your health has been refilled by 20 for 7 dollar points. Your health is now ${playerHealth}`);
           playerHealth = playerHealth + 20;
           playerMoney = playerMoney - 7;
+          window.alert(`Your health has been refilled by 20 for 7 dollar points. Your health is now ${playerHealth}`);
         } else {
           window.alert(`Sorry, not enough money!`)
         }
@@ -145,9 +159,9 @@ var startGame = function() {
       case "UPGRADE":
       case "upgrade":
         if (playerMoney >= 7) {
-          window.alert(`You payed 7 dollar points to increase your attack by 6 megatons Your attack is now ${playerAttack}`);
           playerAttack = playerAttack + 6;
           playerMoney = playerMoney - 7;
+          window.alert(`You payed 7 dollar points to increase your attack by 6 megatons Your attack is now ${playerAttack}`);
         } else {
           window.alert(`Sorry, not enough money!`)
         }
