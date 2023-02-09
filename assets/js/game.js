@@ -14,6 +14,29 @@ var playerInfo = {
   health: 100,
   attack: 20,
   money: 10,
+  reset: function() {
+    this.health = 100;
+    this.attack = 20;
+    this.money = 10;
+  },
+  refillHealth: function() {
+    if(this.money >= 7) {
+      this.health += 20;
+      this.money -= 7;
+      window.alert(`Your health has been refilled by 20 for 7 dollar points. Your health is now ${this.health}`);
+    } else {
+      window.alert(`Sorry, not enough money!`)
+    }
+  },
+  upgradeAttack: function() {
+    if (this.money >= 9) {
+      this.attack += 8;
+      this.money -= 9;
+      window.alert(`You payed 9 dollar points to increase your attack by 8 megatons Your attack is now ${this.attack}`);
+    } else {
+      window.alert(`Sorry, not enough money!`)
+    }
+  }
 };
 
 // declare enemie's stats
@@ -81,9 +104,7 @@ var fight = function(enemy){
 // START the game function
 var startGame = function() {
   // reset player stats
-  playerInfo.health = 100;
-  playerInfo.attack = 20;
-  playerInfo.money = 10;
+  playerInfo.reset();
 
   // fight each enemy robot by looping over them and fighting them one at a time
   for (var i = 0; i < enemyInfo.length; i++) {
@@ -152,24 +173,12 @@ var startGame = function() {
     switch (shopOptionPrompt) {
       case "REFILL":
       case "refill":
-        if (playerInfo.money >= 7) {
-          playerInfo.health = playerInfo.health + 20;
-          playerInfo.money = playerInfo.money - 7;
-          window.alert(`Your health has been refilled by 20 for 7 dollar points. Your health is now ${playerInfo.health}`);
-        } else {
-          window.alert(`Sorry, not enough money!`)
-        }
+        playerInfo.refillHealth()
         break;
       
       case "UPGRADE":
       case "upgrade":
-        if (playerInfo.money >= 7) {
-          playerInfo.attack = playerInfo.attack + 6;
-          playerInfo.money = playerInfo.money - 7;
-          window.alert(`You payed 7 dollar points to increase your attack by 6 megatons Your attack is now ${playerInfo.attack}`);
-        } else {
-          window.alert(`Sorry, not enough money!`)
-        }
+        playerInfo.upgradeAttack()
         break;
 
       case "LEAVE":
