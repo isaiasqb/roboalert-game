@@ -7,10 +7,19 @@ var randomNumber = function (min, max) {
   return value;
 };
 
+var getPlayerName = function() {
+  var name = ""
+
+  while (name === "" || name === null){
+    name = prompt("What is your CHAMPION's name?")
+  }
+  console.log(`Your champion's name is ${name}`);
+  return name
+ }
 
 // declare player's stats
 var playerInfo = {
-  name: window.prompt("What is your CHAMPION's name?"),
+  name: getPlayerName(),
   health: 100,
   attack: 20,
   money: 10,
@@ -61,14 +70,14 @@ var fight = function(enemy){
       // if YES (true), leave fight
       if (confirmSkip) {
         playerInfo.money =  Math.max(0, playerInfo.money - 10);
-        console.log(`***----- ${playerInfo.name} has chosen to SKIP this battle! -----***
-        You haven been Penalized for skipping the battle. Your remaining Money is ${clr}${playerInfo.money} coins `)
+        console.log(`----- ${playerInfo.name} has chosen to ${clr}SKIP${endclr} this battle! -----
+        You haven been Penalized for skipping the battle. Your remaining Money is ${clr + playerInfo.money} coins`)
         break
       } 
     } //IF player chooses to fight
      else if (promptFight === "F" || promptFight === "f") {
       //log the answer of the skip or fight
-      console.log(`***----- You chose to ${clr}FIGHT${endclr} this battle! -----***`);
+      console.log(`----- You chose to ${clr}FIGHT${endclr} this battle! -----`);
       } 
     
     // Player Attacks
@@ -116,11 +125,9 @@ var startGame = function() {
       pickedEnemyObj.health = randomNumber(40,60)
 
       console.log(
-        `WELCOME to ROBOALERT Battle!
-        ROUND #${i + 1} /////  ${pickedEnemyObj.name} has ENTERED THE BATTLEGROUND with ${clr}${pickedEnemyObj.health}${endclr} health points and ${clr}${pickedEnemyObj.attack}${endclr} attack power!  
-        ${clr}${playerInfo.name}${endclr} is ready to fight!
-        packing a punch of ${clr}${playerInfo.attack} megatons!${endclr}`);
-        
+        `///// WELCOME to ROBOALERT Battle! - ROUND #${i + 1}
+        ${clr + pickedEnemyObj.name + endclr} - (Health:${clr + pickedEnemyObj.health + endclr} Attack Power:${clr + pickedEnemyObj.attack + endclr}) Will Fight you!
+        ${clr + playerInfo.name + endclr}, your champion (Health:${clr + playerInfo.health + endclr} Attack Power:${clr + playerInfo.attack + endclr} ) is ready!`);
 
         fight(pickedEnemyObj);
 
@@ -159,7 +166,7 @@ var startGame = function() {
       startGame();
     }
     else {
-      window.alert(`Ok then. Thank you for playing! See you later? I guess`)
+      console.log(`Ok then. Thank you for playing! See you later? I guess`)
     }
 
   }
