@@ -57,28 +57,50 @@ var enemyInfo = [
 
 
 
+var fightOrSkip = function() {
+  // ask player if they want to fight or skip battle
+  var promptFight = window.prompt(`Would you FIGHT or SKIP this battle? Enter F or S to choose.`);
+  var promptFight = promptFight.toLowerCase();
+ 
+  //CONDITIONAL recursive
+//  if(promptFight === "" || promptFight === null) {
+//    window.alert(`Invalid Answer. Try Again`);
+//    return fightOrSkip()
+//  }
+ 
+ // IF player chooses to skip the battle
+ if (promptFight === "s") {
+  // confirm to skip battle
+  var confirmSkip = window.confirm(`Are you sure you want to SKIP the Battle?`);
+    // if YES (true), leave fight
+    if (confirmSkip) {
+      playerInfo.money =  Math.max(0, playerInfo.money - 10);
+      
+      console.log(`----- ${playerInfo.name} wants to ${clr}SKIP${endclr} this battle! -----
+      You haven been Penalized for skipping the battle. Your remaining Money is ${clr + playerInfo.money} coins`);
+      
+      //return true if player wants to leave
+      return true;
+    }
+  } 
+  else if (promptFight === "f") {
+  console.log(`----- You chose to ${clr}FIGHT${endclr} this battle! -----`);
+  }
+  else {
+    window.alert(`Invalid Answer. Try Again`);
+    return fightOrSkip()
+  }  
+}
+
+
 var fight = function(enemy){
   //Repeat and execute the fight function as long as the enemy is alive
-  while (playerInfo.health > 0 &&  enemy.health > 0 ) {  
-    // ask player if they want to fight or skip battle
-    var promptFight = window.prompt(`Would you FIGHT or SKIP this battle? Enter F or S to choose.`);
+  while (playerInfo.health > 0 &&  enemy.health > 0 ) {
     
-    // IF player chooses to skip the battle
-    if (promptFight === "S" || promptFight === "s") {
-      // confirm to skip battle
-      var confirmSkip = window.confirm(`Are you sure you want to SKIP the Battle?`);
-      // if YES (true), leave fight
-      if (confirmSkip) {
-        playerInfo.money =  Math.max(0, playerInfo.money - 10);
-        console.log(`----- ${playerInfo.name} has chosen to ${clr}SKIP${endclr} this battle! -----
-        You haven been Penalized for skipping the battle. Your remaining Money is ${clr + playerInfo.money} coins`)
-        break
-      } 
-    } //IF player chooses to fight
-     else if (promptFight === "F" || promptFight === "f") {
-      //log the answer of the skip or fight
-      console.log(`----- You chose to ${clr}FIGHT${endclr} this battle! -----`);
-      } 
+    if(fightOrSkip()) {
+      //if SKIP was true, break the loop and leave fight
+      break;
+    };
     
     // Player Attacks
     //generate a random attack power based on the player attack power
