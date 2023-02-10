@@ -11,7 +11,7 @@ var getPlayerName = function() {
   var name = ""
 
   while (name === "" || name === null){
-    name = prompt("What is your CHAMPION's name?")
+    name = prompt(`📋 What is your CHAMPION's name?📋 `)
   }
   console.log(`Your champion's name is ${name}`);
   return name
@@ -94,6 +94,13 @@ var fightOrSkip = function() {
 
 
 var fight = function(enemy){
+  //keep track of who goes first
+  var isPlayerTurn = true;
+
+  if (Math.random() > 0.5) {
+    isPlayerTurn = false;
+  }
+
   //Repeat and execute the fight function as long as the enemy is alive
   while (playerInfo.health > 0 &&  enemy.health > 0 ) {
     
@@ -106,7 +113,7 @@ var fight = function(enemy){
     //generate a random attack power based on the player attack power
     var playerDamage = randomNumber(playerInfo.attack -5, playerInfo.attack);
     enemy.health = Math.max(0, enemy.health - playerDamage) //Math.max displays the largest number, preventing -0 values
-    console.log(`${playerInfo.name} Attacked! ${enemy.name}'s health is now ${enemy.health}`)
+    console.log(`${playerInfo.name} Attacked! ⚡ ${enemy.name}'s health is now ${enemy.health}`)
     
     // Check enemy's health
     if (enemy.health <= 0) {
@@ -120,7 +127,7 @@ var fight = function(enemy){
     //generate a random attack power based on the player attack power
     var enemyDamage = randomNumber(enemy.attack - 5, enemy.attack)
     playerInfo.health = Math.max(0, playerInfo.health - enemyDamage) //Math.max displays the largest number, preventing -0 values
-    console.log(`${enemy.name} Attacked! ${playerInfo.name}'s health is now ${playerInfo.health}`)
+    console.log(`${enemy.name} Attacked! 💥 ${playerInfo.name}'s health is now ${playerInfo.health}`)
 
     // check player's health
     if (playerInfo.health <= 0){
@@ -147,21 +154,21 @@ var startGame = function() {
       pickedEnemyObj.health = randomNumber(40,60)
 
       console.log(
-        `///// WELCOME to ROBOALERT Battle! - ROUND #${i + 1}
-        ${clr + pickedEnemyObj.name + endclr} - (Health:${clr + pickedEnemyObj.health + endclr} Attack Power:${clr + pickedEnemyObj.attack + endclr}) Will Fight you!
-        ${clr + playerInfo.name + endclr}, your champion (Health:${clr + playerInfo.health + endclr} Attack Power:${clr + playerInfo.attack + endclr} ) is ready!`);
+        `///// WELCOME to ROBOALERT Battle! ⚔️ ROUND #${i + 1} ⚔️
+        👾 ${clr + pickedEnemyObj.name + endclr} - (Health:${clr + pickedEnemyObj.health + endclr} Attack Power:${clr + pickedEnemyObj.attack + endclr}) Will Fight you!
+        🦾 ${clr + playerInfo.name + endclr}, your champion (Health:${clr + playerInfo.health + endclr} Attack Power:${clr + playerInfo.attack + endclr} ) is ready!`);
 
         fight(pickedEnemyObj);
 
         //SHOP option if we are not at the last enemy at the array
         if (playerInfo.health > 0 && i < enemyInfo.length -1) {
-          var storeConfirm = window.confirm(`The fight is over, visit the store?`)
+          var storeConfirm = window.confirm(`This fight is over 🚨 Visit the store? ➡️💵`)
           if (storeConfirm) {
             shop();
           }
         }
       } else {
-        console.log(`xxxxx Your Champion is Dead! GAME OVER FOR YOU xxxxx`);
+        console.log(`xxxxx Your Champion is Dead! ☠️ GAME OVER FOR YOU xxxxx`);
         break;
       }
     } //END for loop
