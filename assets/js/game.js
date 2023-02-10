@@ -187,11 +187,28 @@ var startGame = function() {
 
   //END function for ending the entire game
   var endGame = function(){
-    if(playerInfo.health > 0) {
-      console.log(`GREAT, ${clr}you've survived!${endclr}. ${playerInfo.name} has ${playerInfo.money} bucks in the bank`)
+    //check localStorage for the highScore
+    var highScore = localStorage.getItem("highscore");
+    
+    if (highScore === null) {
+      highScore = 0;
+    }
+
+    //check if player beat the current highschore and can set a new highscore
+    if (playerInfo.money > highScore) {
+      localStorage.setItem("highscore", playerInfo.money);
+      localStorage.setItem("name", playerInfo.name);
+      console.log(`${clr + playerInfo.name + endclr} now has the 👑 highest score 👑 with ${clr + playerInfo.money + endclr} RoboDollars!`);
     }
     else {
-      console.log(`Your champion was DESTROYED!`)
+      console.log(`You did not beat the highscore of ${clr + highScore +endclr}`)
+    }
+
+    if(playerInfo.health > 0) {
+      console.log(`That is the END of the GAME. GREAT, ${clr}you've survived!${endclr}`);
+    }
+    else {
+        console.log(`xxxxx Your Champion is Dead! ☠️ GAME OVER FOR YOU xxxxx`);
     }
 
     //ask player if they'd like to play again
