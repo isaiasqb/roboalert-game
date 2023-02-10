@@ -97,44 +97,50 @@ var fight = function(enemy){
   //keep track of who goes first
   var isPlayerTurn = true;
 
+  // randomly change turn order
   if (Math.random() > 0.5) {
     isPlayerTurn = false;
   }
 
   //Repeat and execute the fight function as long as the enemy is alive
   while (playerInfo.health > 0 &&  enemy.health > 0 ) {
-    
-    if(fightOrSkip()) {
-      //if SKIP was true, break the loop and leave fight
-      break;
-    };
-    
-    // Player Attacks
-    //generate a random attack power based on the player attack power
-    var playerDamage = randomNumber(playerInfo.attack -5, playerInfo.attack);
-    enemy.health = Math.max(0, enemy.health - playerDamage) //Math.max displays the largest number, preventing -0 values
-    console.log(`${playerInfo.name} Attacked! ⚡ ${enemy.name}'s health is now ${enemy.health}`)
-    
-    // Check enemy's health
-    if (enemy.health <= 0) {
-      console.log(`Your Enemy, ${enemy.name} has been destroyed!`)
-      //award player some money
-      playerInfo.money = playerInfo.money + 20
-      break;
-    }
+    if (isPlayerTurn) {
+              if (fightOrSkip()) {
+                //if SKIP was true, break the loop and leave fight
+                break;
+              };
+              
+              // Player Attacks
+              //generate a random attack power based on the player attack power
+              var playerDamage = randomNumber(playerInfo.attack -5, playerInfo.attack);
+              enemy.health = Math.max(0, enemy.health - playerDamage) //Math.max displays the largest number, preventing -0 values
+              console.log(`${playerInfo.name} Attacked! ⚡ ${enemy.name}'s health is now ${enemy.health}`);
+              
+              // Check enemy's health
+              if (enemy.health <= 0) {
+                console.log(`Your Enemy, ${enemy.name} has been destroyed!`)
+                //award player some money
+                playerInfo.money = playerInfo.money + 20
+                //leave while loop if player is dead
+                break;
+              }
+    } //Player gets attacked first
+    else {
+              // Enemy Attacks
+              //generate a random attack power based on the player attack power
+              var enemyDamage = randomNumber(enemy.attack - 5, enemy.attack)
+              playerInfo.health = Math.max(0, playerInfo.health - enemyDamage) //Math.max displays the largest number, preventing -0 values
+              console.log(`${enemy.name} Attacked! 💥 ${playerInfo.name}'s health is now ${playerInfo.health}`);
 
-    // Enemy Attacks
-    //generate a random attack power based on the player attack power
-    var enemyDamage = randomNumber(enemy.attack - 5, enemy.attack)
-    playerInfo.health = Math.max(0, playerInfo.health - enemyDamage) //Math.max displays the largest number, preventing -0 values
-    console.log(`${enemy.name} Attacked! 💥 ${playerInfo.name}'s health is now ${playerInfo.health}`)
-
-    // check player's health
-    if (playerInfo.health <= 0){
-      console.log(`Your champion: ${playerInfo.name} has been destroyed!`)
-      break
-    }
-  } //END wuile loop
+              // check player's health
+              if (playerInfo.health <= 0){
+                console.log(`Your champion: ${playerInfo.name} has been destroyed!`)
+                break;
+              }
+    } //END else if isPlayerTurn
+    //shitch turn order for next round 
+    isPlayerTurn = !isPlayerTurn;
+  } //END while loop    
 } //END fight() function
     
     
